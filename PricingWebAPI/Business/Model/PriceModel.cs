@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Business.Model
 {
-    public class ProductWithSubTotal
+    public class PurchaseWithSubTotal
     {
         public PurchaseModelDto PurchaseModelDto { get; set; }
         public decimal SubTotal { get; set; }

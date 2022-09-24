@@ -9,6 +9,6 @@ namespace Business.Rebates
 {
     public interface IRebate
     {
-        IEnumerable<ApplicableRebate> DiscountsApplicable(ProductWithSubTotal product);
+        IEnumerable<ApplicableRebate> DiscountsApplicable(PurchaseWithSubTotal product);
     }
 }

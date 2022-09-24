@@ -3,38 +3,38 @@ using Business.Model;
 using Business.Rebate;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Business.Rebates
 {
-    public class CustomerRebateService : IRebate
+    public class MonthRebateService : IRebate
     {
         private decimal _percentage = 0.0m;
-        private List<CustomerRebate> _customerRebates;
-        public CustomerRebateService(List<CustomerRebate> customerRebate)
+        private List<MonthRebate> _monthRebates;
+        public MonthRebateService(List<MonthRebate> monthRebates)
         {
-            _customerRebates = customerRebate;
+            _monthRebates = monthRebates;
         }
         private decimal CalculateDiscount(PurchaseWithSubTotal item) => Math.Round((item.SubTotal) * _percentage, 2);
-
-
         public IEnumerable<ApplicableRebate> DiscountsApplicable(PurchaseWithSubTotal purchaseWithSubTotal)
         {
             var rebatesApplied = new List<ApplicableRebate>();
-            foreach (var customerRebate in _customerRebates)
+            foreach (var monthRebate in _monthRebates)
             {
-                if (purchaseWithSubTotal.PurchaseModelDto.CustomerId == Convert.ToInt16(customerRebate.Id))
+                if (purchaseWithSubTotal.PurchaseModelDto.DateOfPurchase.Month == DateTime.ParseExact(monthRebate.Month, "MMMM", CultureInfo.CurrentCulture).Month)
                 {
-                    _percentage = decimal.Parse(customerRebate.RebatePercent);
+                    _percentage = decimal.Parse(monthRebate.RebatePercent);
                     var discountedData = CalculateDiscount(purchaseWithSubTotal);
                     var appliedRebate = new ApplicableRebate
                     {
-                        Type =Enums.RebateType.CustomerRebate,
+                        Type = Enums.RebateType.MonthRebate,
                         Text = $"Product ID{purchaseWithSubTotal.PurchaseModelDto.ProductId} = {_percentage:P0} OFF: - {discountedData.ToCurrencyString()}",
                         GrandTotal = discountedData,
                         PurchaseDetails = purchaseWithSubTotal
+                        
                     };
 
                     rebatesApplied.Add(appliedRebate);

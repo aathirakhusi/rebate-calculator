@@ -12,6 +12,6 @@ namespace Business.Model
         public RebateType Type { get; set; }
         public string Text { get; set; }
         public decimal GrandTotal { get; set; }
-        ProductWithSubTotal PurchaseDetails { get; set; }
+        public PurchaseWithSubTotal PurchaseDetails { get; set; }
     }
 }

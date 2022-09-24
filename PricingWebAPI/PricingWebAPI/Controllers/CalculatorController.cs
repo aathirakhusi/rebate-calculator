@@ -29,8 +29,8 @@ namespace PricingWebAPI.Controllers
         {
             PurchaseModel purchaseModel = new PurchaseModel();
             purchaseModel.CustomerId = 332;
-            purchaseModel.Quantity = 1;
-            purchaseModel.ProductId = 1;
+            purchaseModel.Quantity = 26;
+            purchaseModel.ProductId = 2;
             purchaseModel.DateOfPurchase = DateTime.Now;
             var _mappedUser = _mapper.Map<PurchaseModelDto>(purchaseModel);
             _priceCalculatorService.GenerateBill(_mappedUser,GetRebateRules());

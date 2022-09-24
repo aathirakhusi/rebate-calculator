@@ -15,38 +15,39 @@
     "customerRebate": [
       {
         "name": "ABC Corporation",
-        "rebatePercent": "2",
+        "rebatePercent": "0.5",
         "id": "332"
       },
       {
-        "name": "BBC Corporation"
+        "id": "423",
+        "name": "BBC Corporation",
+        "rebatePercent": "0.2"
       }
     ],
-    "rebatePercent": "2",
     "productRebate": [
       {
-        "rebatePercent": "2",
+        "rebatePercent": "0.3",
         "id": "441"
       },
       {
-        "rebatePercent": "2",
+        "rebatePercent": "0.1",
         "id": "2"
       }
     ],
     "volumeRebate": [
       {
         "quantityAbove": "25",
-        "rebatePercent": "4"
+        "rebatePercent": "0.2"
       },
       {
         "quantityAbove": "50",
-        "rebatePercent": "5"
+        "rebatePercent": "0.3"
       }
     ],
     "monthRebate": [
       {
-        "month": "December",
-        "rebatePercent": "2"
+        "month": "September",
+        "rebatePercent": "0.5"
       }
     ]
   }

@@ -9,29 +9,27 @@ using System.Threading.Tasks;
 
 namespace Business.Rebates
 {
-    public class CustomerRebateService : IRebate
+    public class VolumeRebateService : IRebate
     {
         private decimal _percentage = 0.0m;
-        private List<CustomerRebate> _customerRebates;
-        public CustomerRebateService(List<CustomerRebate> customerRebate)
+        private List<VolumeRebate> _volumeRebates;
+        public VolumeRebateService(List<VolumeRebate> volumeRebates)
         {
-            _customerRebates = customerRebate;
+            _volumeRebates = volumeRebates;
         }
         private decimal CalculateDiscount(PurchaseWithSubTotal item) => Math.Round((item.SubTotal) * _percentage, 2);
-
-
         public IEnumerable<ApplicableRebate> DiscountsApplicable(PurchaseWithSubTotal purchaseWithSubTotal)
         {
             var rebatesApplied = new List<ApplicableRebate>();
-            foreach (var customerRebate in _customerRebates)
+            foreach (var volumeRebate in _volumeRebates)
             {
-                if (purchaseWithSubTotal.PurchaseModelDto.CustomerId == Convert.ToInt16(customerRebate.Id))
+                if (purchaseWithSubTotal.PurchaseModelDto.Quantity > Convert.ToInt64(volumeRebate.QuantityAbove))
                 {
-                    _percentage = decimal.Parse(customerRebate.RebatePercent);
+                    _percentage = decimal.Parse(volumeRebate.RebatePercent);
                     var discountedData = CalculateDiscount(purchaseWithSubTotal);
                     var appliedRebate = new ApplicableRebate
                     {
-                        Type =Enums.RebateType.CustomerRebate,
+                        Type = Enums.RebateType.VolumeRebate,
                         Text = $"Product ID{purchaseWithSubTotal.PurchaseModelDto.ProductId} = {_percentage:P0} OFF: - {discountedData.ToCurrencyString()}",
                         GrandTotal = discountedData,
                         PurchaseDetails = purchaseWithSubTotal

@@ -13,11 +13,10 @@ namespace Business.Rebates
         {
             return new List<IRebate>
             {
-                new CustomerRebateService(
-                      rebateTypes.CustomerRebate),
-                new MonthRebate()
-
-                
+                new CustomerRebateService(rebateTypes.CustomerRebate),
+                new MonthRebateService(rebateTypes.MonthRebate),
+                new VolumeRebateService(rebateTypes.VolumeRebate),
+                new ProductRebateService(rebateTypes.ProductRebate)
             };
         }
     }

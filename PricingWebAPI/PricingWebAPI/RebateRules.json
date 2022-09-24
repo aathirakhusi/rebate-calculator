@@ -1,0 +1,53 @@
+{
+  "products": [
+    {
+      "name": "ABC Chair",
+      "id": "441",
+      "unitPrice": "10"
+    },
+    {
+      "name": "Sofa Delux",
+      "id": "2",
+      "unitPrice": "10"
+    }
+  ],
+  "rebateTypes": {
+    "customerRebate": [
+      {
+        "name": "ABC Corporation",
+        "rebatePercent": "2",
+        "id": "332"
+      },
+      {
+        "name": "BBC Corporation"
+      }
+    ],
+    "rebatePercent": "2",
+    "productRebate": [
+      {
+        "rebatePercent": "2",
+        "id": "441"
+      },
+      {
+        "rebatePercent": "2",
+        "id": "2"
+      }
+    ],
+    "volumeRebate": [
+      {
+        "quantityAbove": "25",
+        "rebatePercent": "4"
+      },
+      {
+        "quantityAbove": "50",
+        "rebatePercent": "5"
+      }
+    ],
+    "monthRebate": [
+      {
+        "month": "December",
+        "rebatePercent": "2"
+      }
+    ]
+  }
+}

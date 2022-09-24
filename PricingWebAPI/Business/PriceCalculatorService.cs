@@ -1,5 +1,6 @@
 ﻿using Business.Interface;
 using Business.Model;
+using Business.Rebates;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -12,19 +13,23 @@ namespace Business
 {
     public class PriceCalculatorService : IPriceCalculatorService
     {
-        public PriceModel GenerateBill(PurchaseModelDto purchaseModelDto, string pricingRules)
+        public ProductWithSubTotal GenerateBill(PurchaseModelDto purchaseModelDto, string pricingRules)
         {
             PriceCalculatorModel priceCalculatorModel;
             priceCalculatorModel = JsonConvert.DeserializeObject<PriceCalculatorModel>(pricingRules);
-            PriceModel priceModel = new PriceModel();
-            priceModel.SubTotal = GetSubTotal(purchaseModelDto.ProductId, purchaseModelDto.Quantity, priceCalculatorModel.Products);
+            ProductWithSubTotal productWithSubTotal = new ProductWithSubTotal();
+            productWithSubTotal.PurchaseModelDto = purchaseModelDto;
+            productWithSubTotal.SubTotal = GetSubTotal(purchaseModelDto.ProductId, purchaseModelDto.Quantity, priceCalculatorModel.Products);
+            RebateBuilder rebateBuilder = new RebateBuilder();
+            RebateService rebateService = new RebateService(RebateBuilder.CreateRebates(priceCalculatorModel.RebateTypes),productWithSubTotal);
+            rebateService.CalculateRebate(purchaseModelDto);
             return null;
 
         }
-        private static float GetSubTotal(int productId, int quantity, List<ProductModelDto> products)
+        private static decimal GetSubTotal(int productId, int quantity, List<ProductModelDto> products)
         {
             var val = products.Count * GetUnitPrice(productId, products);
-            return val;
+            return decimal.Parse( Convert.ToString(val));
         }
         private static float GetUnitPrice(int productId, List<ProductModelDto> products)
         {

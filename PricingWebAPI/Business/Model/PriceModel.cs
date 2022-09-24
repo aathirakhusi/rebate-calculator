@@ -6,13 +6,10 @@ using System.Threading.Tasks;
 
 namespace Business.Model
 {
-    public class PriceModel
+    public class ProductWithSubTotal
     {
-        public int Id { get; set; }
-        public int ProductId { get; set; }
-        public string CustomerName { get; set; }
-        public string CustomerId { get; set; }
-        public float SubTotal { get; set; }
-        public decimal GrandTotal { get; set; }
+        public PurchaseModelDto PurchaseModelDto { get; set; }
+        public decimal SubTotal { get; set; }
+
     }
 }

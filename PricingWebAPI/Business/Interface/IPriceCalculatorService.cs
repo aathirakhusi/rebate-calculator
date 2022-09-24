@@ -4,6 +4,6 @@ namespace Business.Interface
 {
     public interface IPriceCalculatorService
     {
-        PriceModel GenerateBill(PurchaseModelDto purchaseModelDto, string pricingRules);
+        ProductWithSubTotal GenerateBill(PurchaseModelDto purchaseModelDto, string pricingRules);
     }
 }

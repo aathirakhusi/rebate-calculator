@@ -14,7 +14,7 @@ namespace Business
     public class PriceCalculatorService : IPriceCalculatorService
     {
 
-        public PurchaseWithSubTotal GenerateBill(PurchaseModelDto purchaseModelDto, string pricingRules)
+        public ApplicableRebate GenerateBill(PurchaseModelDto purchaseModelDto, string pricingRules)
         {
             PriceCalculatorModel priceCalculatorModel;
             priceCalculatorModel = JsonConvert.DeserializeObject<PriceCalculatorModel>(pricingRules);
@@ -23,7 +23,7 @@ namespace Business
             productWithSubTotal.SubTotal = GetSubTotal(purchaseModelDto.ProductId, purchaseModelDto.Quantity, priceCalculatorModel.Products);
             RebateService rebateService = new(RebateBuilder.CreateRebates(priceCalculatorModel.RebateTypes), productWithSubTotal);
             var calculatedRebates = GetRebateWithLessGrandTotal(rebateService.GetApplicableRebates(purchaseModelDto));
-            return null;
+            return calculatedRebates;
 
         }
         private static decimal GetSubTotal(int productId, int quantity, List<ProductModelDto> products)

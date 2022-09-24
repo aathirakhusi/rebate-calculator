@@ -27,6 +27,14 @@ namespace Business
             {
                 rebates.AddRange(rebate.DiscountsApplicable(_productWithSubTotal));
             }
+            if (!rebates.Any())
+                rebates.Add(new ApplicableRebate
+                {
+                    Type = Enums.RebateType.None,
+                    Text = "(No offers available)",
+                    GrandTotal = _productWithSubTotal.SubTotal,
+                    PurchaseDetails = _productWithSubTotal
+                });
             return rebates;
 
         }

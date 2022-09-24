@@ -12,7 +12,7 @@ namespace Business.Rebates
     public class ProductRebateService : IRebate
     {
         private decimal _percentage = 0.0m;
-        private List<ProductRebate> _productRebates;
+        private List<ProductRebate > _productRebates;
         public ProductRebateService(List<ProductRebate> productRebates)
         {
             _productRebates = productRebates;
@@ -30,7 +30,7 @@ namespace Business.Rebates
                     var appliedRebate = new ApplicableRebate
                     {
                         Type = Enums.RebateType.MonthRebate,
-                        Text = $"Product ID{purchaseWithSubTotal.PurchaseModelDto.ProductId} = {_percentage:P0} OFF: - {discountedData.ToCurrencyString()}",
+                        Text = $"Product ID {purchaseWithSubTotal.PurchaseModelDto.ProductId} = {_percentage:P0} OFF: - {discountedData.ToCurrencyString()}",
                         GrandTotal = discountedData,
                         PurchaseDetails = purchaseWithSubTotal
 

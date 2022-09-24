@@ -24,17 +24,11 @@ namespace PricingWebAPI.Controllers
             _priceCalculatorService = priceCalculatorService;
         }
 
-        [HttpGet(Name = "GetWeatherForecast")]
-        public async Task<IActionResult> Get()
+        [HttpPost(Name = "CalculatePrice")]
+        public async Task<IActionResult> Get(PurchaseModel purchaseModel)
         {
-            PurchaseModel purchaseModel = new PurchaseModel();
-            purchaseModel.CustomerId = 332;
-            purchaseModel.Quantity = 26;
-            purchaseModel.ProductId = 2;
-            purchaseModel.DateOfPurchase = DateTime.Now;
             var _mappedUser = _mapper.Map<PurchaseModelDto>(purchaseModel);
             var result = _priceCalculatorService.GenerateBill(_mappedUser, GetRebateRules());
-           // var _mappedresult = _mapper.Map<PurchaseModelDto>(purchaseModel);
 
             return Ok(GetResponseModel(result));
         }

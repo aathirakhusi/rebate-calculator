@@ -16,9 +16,6 @@ namespace PricingWebAPI.Model
         [JsonPropertyName("customerId")]
         public int CustomerId { get; set; }
 
-        [JsonPropertyName("customerName")]
-        public string CustomerName { get; set; }
-
         [JsonPropertyName("totalUnits")]
         public int TotalUnits { get; set; }
 

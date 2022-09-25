@@ -1,5 +1,6 @@
 using Business;
 using Business.Interface;
+using PricingWebAPI.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,7 @@ app.UseSwaggerUI();
 
 
 app.UseHttpsRedirection();
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseAuthorization();
 

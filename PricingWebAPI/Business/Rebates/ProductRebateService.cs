@@ -1,11 +1,6 @@
 ﻿using Business.Helpers;
 using Business.Model;
 using Business.Rebate;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Business.Rebates
 {
@@ -29,7 +24,7 @@ namespace Business.Rebates
                     var discountedData = CalculateDiscount(purchaseWithSubTotal);
                     var appliedRebate = new ApplicableRebate
                     {
-                        Type = Enums.RebateType.MonthRebate,
+                        Type = Enums.RebateType.ProductRebate,
                         Text = $"Product ID {purchaseWithSubTotal.PurchaseModelDto.ProductId} = {_percentage:P0} OFF: - {discountedData.ToCurrencyString()}",
                         GrandTotal = discountedData,
                         PurchaseDetails = purchaseWithSubTotal

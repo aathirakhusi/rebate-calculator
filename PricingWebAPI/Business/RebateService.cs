@@ -1,12 +1,5 @@
-﻿using Business.Rebate;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Business.Model;
+﻿using Business.Model;
 using Business.Rebates;
-using Business.Interface;
 
 namespace Business
 {

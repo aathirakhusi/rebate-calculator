@@ -14,6 +14,12 @@ namespace Business
             priceCalculatorModel = JsonConvert.DeserializeObject<PriceCalculatorModel>(pricingRules);
             PurchaseWithSubTotal productWithSubTotal = new PurchaseWithSubTotal();
             productWithSubTotal.PurchaseModelDto = purchaseModelDto;
+
+            if (!priceCalculatorModel.Products.Any(c => c.Id == purchaseModelDto.ProductId)) {
+                throw new Exception("Please provide a valid product id");
+            
+            }
+
             productWithSubTotal.SubTotal = GetSubTotal(purchaseModelDto.ProductId, purchaseModelDto.Quantity, priceCalculatorModel.Products);
             RebateService rebateService = new(RebateBuilder.CreateRebates(priceCalculatorModel.RebateTypes), productWithSubTotal);
             var calculatedRebates = GetRebateWithLessGrandTotal(rebateService.GetApplicableRebates(purchaseModelDto));
@@ -26,12 +32,19 @@ namespace Business
         }
         private static decimal GetUnitPrice(int productId, List<ProductModelDto> products)
         {
-            foreach (var unitPrice in from product in products
-                                      where Convert.ToUInt32(product.Id) == productId
-                                      let unitPrice = product.UnitPrice
-                                      select unitPrice)
+            try
             {
-                return decimal.Parse(Convert.ToString(unitPrice));
+                foreach (var unitPrice in from product in products
+                                          where product.Id == productId
+                                          let unitPrice = product.UnitPrice
+                                          select unitPrice)
+                {
+                    return decimal.Parse(Convert.ToString(unitPrice));
+                }
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
 
             return 0;

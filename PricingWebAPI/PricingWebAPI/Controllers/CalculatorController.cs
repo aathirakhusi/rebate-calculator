@@ -27,17 +27,32 @@ namespace PricingWebAPI.Controllers
         [HttpPost(Name = "CalculatePrice")]
         public async Task<IActionResult> Get(PurchaseModel purchaseModel)
         {
-            var _mappedUser = _mapper.Map<PurchaseModelDto>(purchaseModel);
-            var result = _priceCalculatorService.GenerateBill(_mappedUser, GetRebateRules());
+            try
+            {
+                var _mappedUser = _mapper.Map<PurchaseModelDto>(purchaseModel);
+                var result = _priceCalculatorService.GenerateBill(_mappedUser, GetRebateRules());
 
-            return Ok(GetResponseModel(result));
+                return Ok(GetResponseModel(result));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+                
+            }
         }
         private static string GetRebateRules()
         {
-            string filePath = Path.GetDirectoryName(System.AppDomain.CurrentDomain.BaseDirectory);
-            using (StreamReader r = new StreamReader(filePath + "\\RebateRules.json"))
+            try
             {
-                return r.ReadToEnd();
+                string filePath = Path.GetDirectoryName(System.AppDomain.CurrentDomain.BaseDirectory);
+                using (StreamReader r = new StreamReader(filePath + "\\RebateRules.json"))
+                {
+                    return r.ReadToEnd();
+                }
+            }
+            catch (Exception e)
+            {
+                throw new FileNotFoundException();
             }
         }
         private static RebatePriceResponseModel GetResponseModel(ApplicableRebate result)
